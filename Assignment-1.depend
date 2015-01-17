@@ -1,0 +1,45 @@
+# depslib dependency file v1.0
+1421519319 source:/home/manish/Programms/Lab Assgn/Sem6/Compilers/Assignment-1/main.cpp
+	"common_headers.h"
+	"regex_checking.h"
+	"nfa_construction.h"
+	"nfa_to_dfa.h"
+	"regex_checking.cpp"
+	"nfa_construction.cpp"
+	"nfa_to_dfa.cpp"
+
+1421519425 /home/manish/Programms/Lab Assgn/Sem6/Compilers/Assignment-1/common_headers.h
+	<iostream>
+	<algorithm>
+	<queue>
+	<vector>
+	<stack>
+	<bitset>
+	<fstream>
+	<set>
+	<string>
+	<sstream>
+	<cstdio>
+	<cstdlib>
+	<cstring>
+	<list>
+	<map>
+
+1421519425 /home/manish/Programms/Lab Assgn/Sem6/Compilers/Assignment-1/regex_checking.h
+
+1421519425 /home/manish/Programms/Lab Assgn/Sem6/Compilers/Assignment-1/nfa_construction.h
+
+1421519425 /home/manish/Programms/Lab Assgn/Sem6/Compilers/Assignment-1/nfa_to_dfa.h
+
+1421515187 /home/manish/Programms/Lab Assgn/Sem6/Compilers/Assignment-1/regex_checking.cpp
+	"common_headers.h"
+	"regex_checking.h"
+
+1421520024 /home/manish/Programms/Lab Assgn/Sem6/Compilers/Assignment-1/nfa_construction.cpp
+	"common_headers.h"
+	"nfa_construction.h"
+
+1421515190 /home/manish/Programms/Lab Assgn/Sem6/Compilers/Assignment-1/nfa_to_dfa.cpp
+	"common_headers.h"
+	"nfa_to_dfa.h"
+
