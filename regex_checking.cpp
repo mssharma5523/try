@@ -179,7 +179,7 @@ string parenthesised_regex(string s)
 		}
 	}
 
-	cout<<"The intermediate converted expression is "<<s<<"\n";
+	//cout<<"The intermediate converted expression is "<<s<<"\n";
 	//next section, to the temp_regex, firstly tokenise by |,then in each token whenever * is there, insert parenthesise it
 	vector<string> tokens;
 	vector<int> positions;
@@ -220,7 +220,7 @@ string parenthesised_regex(string s)
 			fin_stk.push('|');
 	}
 	fin_regex.clear();
-	cout<<"\n"<<fin_stk.size()<<"\n";
+	//cout<<"\n"<<fin_stk.size()<<"\n";
 	while(!fin_stk.empty())
 	{
 		c = fin_stk.top();
@@ -229,7 +229,7 @@ string parenthesised_regex(string s)
 		fin_stk.pop();
 	}
 	reverse(fin_regex.begin(),fin_regex.end()); //final string after proper parenthesising, now unmapping needs to be done
-	cout<<fin_regex<<"\n";
+	//cout<<fin_regex<<"\n";
 	//code segment for unmapping the fin_regex expression so as to get the final expression;
 	map<string,char>::iterator unmap;
 	for(unmap=mapping.begin();unmap!=mapping.end();unmap++)
@@ -284,7 +284,7 @@ string infixTopostfix(string exp)
 		s+=exp[i];
 
 	}
-	cout<<"The converted string is "<<s<<"\n";
+	cout<<"The converted string with proper concatenation is "<<s<<"\n";
 	//converting the infix expression to postfix expression.
 
 	for(int i=0;i<s.length();i++)

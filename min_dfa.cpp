@@ -1,15 +1,18 @@
+#include "common_headers.h"
+#include "min_dfa.h"
+
 void Min_DFA(){
 
 	for(int i=0;i<MAX_STATE;i++){
 				for(int j=0;j<MAX_ALPHABET;j++){
-					trans_table[i][j]=-1;
+					trans_table_dfa[i][j]=-1;
 				}
 			}
 	ifstream fin("DFA1.txt");
 	int final_num,num_trans;
 
 	// Reading input file contents
-	fin>>states_num>>num_alpha;
+	fin>>states_num>>num_alpha_dfa;
 	fin>>final_num;
 	for(int i=0;i<final_num;i++){
 		int j;
@@ -21,7 +24,7 @@ void Min_DFA(){
 	for(int i=0;i<num_trans;i++){
 		int s,a;
 		fin>>s>>a;
-		fin>>trans_table[s][a];
+		fin>>trans_table_dfa[s][a];
 	}
 
 	//eliminate the non-reachable state
@@ -57,10 +60,10 @@ void Min_DFA(){
 		for(int i=1;i<states_num;i++){
 			for(int j=0;j<i;j++){
 				if(mark_table[i][j]==0){
-					for(int k=1;k<=num_alpha;k++){
-						if((trans_table[i][k]!=-1)&&(trans_table[j][k]!=-1)){
+					for(int k=1;k<=num_alpha_dfa;k++){
+						if((trans_table_dfa[i][k]!=-1)&&(trans_table_dfa[j][k]!=-1)){
 						 //This is an extra condition if the dfa does not have complete transition table
-							if(mark_table[trans_table[i][k]][trans_table[j][k]]==1){
+							if(mark_table[trans_table_dfa[i][k]][trans_table_dfa[j][k]]==1){
 								mark_table[i][j]=1;
 								mark_table[j][i]=1;
 
@@ -68,7 +71,7 @@ void Min_DFA(){
 								break;
 							}
 						}
-						else if(((trans_table[i][k]!=-1)&&(trans_table[j][k]==-1))||((trans_table[i][k]==-1)&&(trans_table[j][k]!=-1))){
+						else if(((trans_table_dfa[i][k]!=-1)&&(trans_table_dfa[j][k]==-1))||((trans_table_dfa[i][k]==-1)&&(trans_table_dfa[j][k]!=-1))){
 							mark_table[i][j]=1;
 							marked=1;
 							break;
@@ -194,15 +197,15 @@ void Min_DFA(){
 					if(it->first!=dfa_intermediate_state[i].first){	//dont consider the same nodes from dfa_minimised_state vector and dfa_intermediate_state vector
 						//if(st->final==current->final){
 							int a;
-							for(a=1;a<=num_alpha;a++){
-								if(dfa_node[trans_table[j][a]]!=dfa_node[trans_table[dfa_of_concern][a]]){
+							for(a=1;a<=num_alpha_dfa;a++){
+								if(dfa_node[trans_table_dfa[j][a]]!=dfa_node[trans_table_dfa[dfa_of_concern][a]]){
 									break;
 								}
 
 							}
 							//cout<<"I am here "<<endl;
 							//merge if the above condition is satisfied for all the alphabets
-							if((a==num_alpha)&&(st->final==current->final)){ //final and non-final nodes cannot be merged
+							if((a==num_alpha_dfa)&&(st->final==current->final)){ //final and non-final nodes cannot be merged
 								for(int j=0;j<states_num;j++){
 									if(st->constituent_dfa_state[j]==1){
 										dfa_node[j]=nw;
@@ -283,7 +286,7 @@ void Min_DFA(){
 	}
 	for(int i=0;i<dfa_minimised_state.size();i++){
 
-					for(int j=1;j<num_alpha;j++){
+					for(int j=1;j<num_alpha_dfa;j++){
 								//bitset<MAX_NFA_STATES> s;
 								//move_states(DFAstates[i]->nfa_states,j,s);
 								//epsilon_all_state(s,s);
@@ -294,9 +297,9 @@ void Min_DFA(){
 											break;
 								}
 								cout<<"k is"<<k<<endl;
-								//if(dfa_node[trans_table[k][j]]!=NULL){
-										int search = trans_table[k][j];
-								//cout<<endl<<trans_table[k][j]<<endl;
+								//if(dfa_node[trans_table_dfa[k][j]]!=NULL){
+										int search = trans_table_dfa[k][j];
+								//cout<<endl<<trans_table_dfa[k][j]<<endl;
 								if(search!=-1){
 								for(int t=0;t<dfa_minimised_state.size();t++){
 										node* p = dfa_minimised_state[t].first;

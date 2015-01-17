@@ -17,8 +17,8 @@ struct _map{
 };
 
 
-int trans_table[MAX_STATE][MAX_ALPHABET];
-int states_num;//num_alpha which was defined here has been already defined in nfa_to_dfa.h
+int trans_table_dfa[MAX_STATE][MAX_ALPHABET];
+int states_num,num_alpha_dfa;//num_alpha which was defined here has been already defined in nfa_to_dfa.h
 
 bitset<MAX_STATE>final_init;//Initial final states of the input dfa
 vector<_map> dfa_minimised_state;//the second here contains the index of the corresponding node in the dfa_intermediate_state vetor
@@ -31,7 +31,7 @@ node* dfa_node[MAX_STATE];//this array contains the node to which a state of the
 		dfa_min(){
 			for(int i=0;i<MAX_STATE;i++){
 				for(int j=0;j<MAX_ALPHABET;j++){
-					trans_table[i][j]=-1;
+					trans_table_dfa[i][j]=-1;
 				}
 			}
 		}
@@ -46,7 +46,7 @@ node* dfa_node[MAX_STATE];//this array contains the node to which a state of the
 		q.pop();
 		state[s]=1;
 		for(int i=0;i<MAX_ALPHABET;i++){
-			int s1=trans_table[s][i];
+			int s1=trans_table_dfa[s][i];
 			if(state[s1]!=1)
 				q.push(s1);
 		}

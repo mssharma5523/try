@@ -43,3 +43,55 @@
 	"common_headers.h"
 	"nfa_to_dfa.h"
 
+1421523724 source:/home/manish/Programms/Lab Assgn/Sem6/try/main.cpp
+	"common_headers.h"
+	"regex_checking.h"
+	"nfa_construction.h"
+	"nfa_to_dfa.h"
+	"regex_checking.cpp"
+	"nfa_construction.cpp"
+	"nfa_to_dfa.cpp"
+	"min_dfa.h"
+	"min_dfa.cpp"
+
+1421521953 /home/manish/Programms/Lab Assgn/Sem6/try/common_headers.h
+	<iostream>
+	<algorithm>
+	<queue>
+	<vector>
+	<stack>
+	<bitset>
+	<fstream>
+	<set>
+	<string>
+	<sstream>
+	<cstdio>
+	<cstdlib>
+	<cstring>
+	<list>
+	<map>
+
+1421521953 /home/manish/Programms/Lab Assgn/Sem6/try/regex_checking.h
+
+1421521953 /home/manish/Programms/Lab Assgn/Sem6/try/nfa_construction.h
+
+1421521953 /home/manish/Programms/Lab Assgn/Sem6/try/nfa_to_dfa.h
+
+1421523401 /home/manish/Programms/Lab Assgn/Sem6/try/regex_checking.cpp
+	"common_headers.h"
+	"regex_checking.h"
+
+1421523400 /home/manish/Programms/Lab Assgn/Sem6/try/nfa_construction.cpp
+	"common_headers.h"
+	"nfa_construction.h"
+
+1421521953 /home/manish/Programms/Lab Assgn/Sem6/try/nfa_to_dfa.cpp
+	"common_headers.h"
+	"nfa_to_dfa.h"
+
+1421524049 /home/manish/Programms/Lab Assgn/Sem6/try/min_dfa.h
+
+1421524049 /home/manish/Programms/Lab Assgn/Sem6/try/min_dfa.cpp
+	"common_headers.h"
+	"min_dfa.h"
+

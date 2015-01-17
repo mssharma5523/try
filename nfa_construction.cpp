@@ -19,17 +19,17 @@ void NFA::insert_nfa(int _size,state _start,state _last)
 		this->start = _start;
 		this->last = _last;
 		size = _size;
-		cout<<"1";
+		//cout<<"1";
 		//std::vector<std::vector<char> > transition_table(_size,std::vector<char>(_size,';'));
-        cout<<_last<<" frustrated"<<last<<"weqq\n";
+        //cout<<_last<<" frustrated"<<last<<"weqq\n";
         vector<char> temp(size,';');
         for(int i=0;i<size;i++)
             transition_table.push_back(temp);
 
-        cout<<"2";
+        //cout<<"2";
 	}
 	else{
-		cout<<"Error Initialising the NFA\n";
+		cout<<"Error Initialising the NFA\n Cannot complete the process due to memory allocation\n";
 		exit(1);
 	}
 }
@@ -89,7 +89,7 @@ void NFA::new_transition(state _start,state _last, char alphabet)
 
 	}
 	else{
-		cout<<"Invalid states as Input\n";
+		cout<<"Invalid states as Input\n Exiting the Process..try again\n";
 		exit(1);
 	}
 }
@@ -103,6 +103,7 @@ void NFA::shift_states(int _shift)
 		cout<<"Invalid shifting of states\n";
 		return;
 	}
+
 
 	//vector<vector<char> > new_table(temp_size,std::vector<char>(temp_size,';'));
 	vector<vector<char> > new_table;
@@ -118,7 +119,7 @@ void NFA::shift_states(int _shift)
 	this->start = this->start + _shift;
 	this->last = this->last + _shift;
 	transition_table = new_table;
-	cout<<"\n"<<transition_table.size()<<" "<<transition_table[0].size()<<"\n";
+	//cout<<"\n"<<transition_table.size()<<" "<<transition_table[0].size()<<"\n";
 	return;
 }
 
@@ -128,7 +129,7 @@ void NFA :: print()
 	cout<<"The starting state is "<<start<<"\n";
 	cout<<"The final state is "<<last<<"\n";
 
-	cout<<"The transition table is as follows \n";
+	cout<<"The transition table for the NFA is as follows \n";
 
 	for(int i = 0;i<size;i++)
 	{
@@ -221,9 +222,9 @@ NFA nfa_union(NFA first,NFA second)
     union_nfa.start = 0;
 	union_nfa.new_transition(second.last,union_nfa.size-1,' ');
 	union_nfa.new_transition(first.last,union_nfa.size-1, ' ');
-	cout<<union_nfa.size<<"\n";
+	//cout<<union_nfa.size<<"\n";
 	union_nfa.setfinal(union_nfa.size-1);
-	cout<<"The last state is "<<union_nfa.last<<"\n";
+	//cout<<"The last state is "<<union_nfa.last<<"\n";
 	return union_nfa;
 }
 
@@ -248,14 +249,14 @@ NFA nfa_closure(NFA close)
 	first.addNewState();
 	//NFA closure_nfa(first);
 	//closure_nfa.start = first.start;
-	cout<<first.start<<" gjg"<<first.last<<"\n";
+	//cout<<first.start<<" gjg"<<first.last<<"\n";
 	first.new_transition(first.last,first.start,' ');
 	first.new_transition(first.last,first.size-1,' ');
 	first.new_transition(0,first.start,' ');
 	first.new_transition(0,first.size-1,' ');
 	first.start = 0;
 	first.last = first.size-1;
-	cout<<first.last<<"\n";
+	//cout<<first.last<<"\n";
 	return first;
 }
 
@@ -317,7 +318,7 @@ NFA postfix_to_nfa(string postfix)
 		}
 		else{
 			 to_push_char_ = build_nfa(postfix[i]);
-			 cout<<to_push_char_.start<<" afa"<<to_push_char_.last<<"af\n";
+		//	 cout<<to_push_char_.start<<" afa"<<to_push_char_.last<<"af\n";
 			 automata.push(to_push_char_);
 
 		}
@@ -338,15 +339,23 @@ void print_to_file(NFA final_nfa_)
 	out_nfa<<final_nfa_.size<<" 2\n";
 	cout<<"Writing to file\n";
 	out_nfa<<"1 "<<final_nfa_.last<<"\n";
-    cout<<"Writing to file\n";
+    //cout<<"Writing to file\n";
 	int no_of_transitions = 0,char_input,count_transition;//e-0,a-1,b-2
-    cout<<"Printing to file";
-    cout<<final_nfa_.size<<"\n";
+    //cout<<"Printing to file";
+   // cout<<final_nfa_.size<<"\n";
+    count_transition = 0;
+    for(int i =0;i<final_nfa_.size;i++)
+        for(int j=0;j<final_nfa_.size;j++)
+        {
+            if(final_nfa_.transition_table[i][j]!=';')
+                count_transition +=1;
+        }
+    out_nfa<<count_transition<<"\n";
 	for(int i=0;i<final_nfa_.size;i++)
     {
         count_transition = 0;
         char_input = -1;
-        cout<<"Writing to file\n";
+      //  cout<<"Writing to file\n";
         for(int j=0;j<final_nfa_.size;j++)
         {
             if(final_nfa_.transition_table[i][j]!=';'){
@@ -367,5 +376,6 @@ void print_to_file(NFA final_nfa_)
         out_nfa<<"\n";
     }
     out_nfa.close();
+    cout<<"Writing to file finished\n";
     return;
 }
