@@ -4,7 +4,7 @@
 //checking if the char is an operator
 bool isOperator(char c)
 {
-	if(c=='.' || c=='|' || c== '*' || c== '(' || c== ')')
+	if(c=='.' || c=='|' || c== '*' || c== '(' || c== ')' || c=='+')
 		return true;
 	return false;
 }
@@ -68,6 +68,7 @@ bool isCorrect_regex(string s)
 	}
 */
 	//a new logic for matching the correctness of the expression
+	//scans through the whole string char by char and checking for the wrong case by case--
 
 	if(s[0]!= '|' || s[0]!= '*' || s[0]!='.' || s[0]!='+' || s[0]!=')' )
 	{
@@ -197,6 +198,7 @@ string parenthesised_regex(string s)
 	positions.push_back(s.length());
 	cur = 0;
 	char c;
+	//converting the tokens to back to their original
 	for(it = positions.begin()+1;it!=positions.end();it++)
 	{
 		fin_stk.push('(');
@@ -271,6 +273,7 @@ string infixTopostfix(string exp)
 	s.clear();
 	posfix.clear();
 	s+=exp[0];
+	//firstly concatenate the string properly and using proper check cases..
 	for(int i=1;i<exp.length();i++)
 	{
 		if(!isOperator(exp[i-1]) && !isOperator(exp[i]))
@@ -279,17 +282,19 @@ string infixTopostfix(string exp)
 		}
 		if(exp[i-1]!='|' && exp[i]=='(')
 			s+='.';
-        if(exp[i-1]=='*' && (!isOperator(exp[i]) ))
+        else if(exp[i-1]=='*' && !isOperator(exp[i]) )
             s+='.';
+        else if(exp[i-1] == ')' &&  !isOperator(exp[i]))
+        	s+='.';
 		s+=exp[i];
 
 	}
 	cout<<"The converted string with proper concatenation is "<<s<<"\n";
 	//converting the infix expression to postfix expression.
-
+	//the algo used is same to that of used in numerical infix to postfix
 	for(int i=0;i<s.length();i++)
 	{
-		cout<<i<<"\n";
+		//cout<<i<<"\n";
 		if(isOperator(s[i]))
 		{
 			if(op.empty() || op.top() == '(')

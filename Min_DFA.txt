@@ -1,2 +1,7 @@
-No of states are: 0
+No of states are: 2
 No of alphabets: 2
+Final State is:2
+Transition from state 2 on 1 to 1
+Transition from state 2 on 2 to 3
+Transition from state 0 on 1 to 1
+Transition from state 0 on 2 to 2

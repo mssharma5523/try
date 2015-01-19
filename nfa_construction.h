@@ -21,17 +21,9 @@ public:
 	set<char> alphabets; //set of alphabets from which there is a transition in this NFA
 
 
-	//NFA();
+	
 	void insert_nfa(int _size,state _start,state _last);
-	//NFA(const NFA& other);
-
-	//variable declarations for the NFA
-
-//	state start,last;//start and the last state, typedef used for namechange
-//	int size;//size of the NFA
-//	vector<vector<char> > transition_table; //transition table for this NFA
-//	set<char> alphabets; //set of alphabets from which there is a transition in this NFA
-
+	
 
 
 	//function declaration for the NFA class
@@ -45,7 +37,7 @@ public:
 	void copy_transition_table(NFA& other);
 	void addNewState();
 	void shift_states(int _shift);
-	//set<state> transition(set<state> states,char alphabet);
+	
 	void setfinal(int a);
 
 };

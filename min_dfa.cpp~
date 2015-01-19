@@ -8,7 +8,7 @@ void Min_DFA(){
 					trans_table_dfa[i][j]=-1;
 				}
 			}
-	ifstream fin("DFA.txt");
+	ifstream fin("DFA1.txt");
 	int final_num,num_trans;
 
 	// Reading input file contents
@@ -140,12 +140,12 @@ void Min_DFA(){
 		node*st=dfa_intermediate_state[i].first;
 		//cout<<st->final<<endl;
 		for(int j=0;j<states_num;j++){
-			//if(dfa_intermediate_state[i].first->constituent_dfa_state[j]==1)
-				//cout<<j<<" ";
+			if(dfa_intermediate_state[i].first->constituent_dfa_state[j]==1)
+				cout<<j<<" ";
 		}
-		//cout<<endl;
+		cout<<endl;
 	}
-	//cout<<endl;
+	cout<<endl;
 
 
 	int merge=1;
@@ -239,14 +239,14 @@ void Min_DFA(){
 
 			//cout<<st->final<<endl;
 				for(int j=0;j<states_num;j++){
-					//if(nw->constituent_dfa_state[j]==1)
-						//cout<<j<<" ";
+					if(nw->constituent_dfa_state[j]==1)
+						cout<<j<<" ";
 				}
-				for(int j=0;j<states_num;j++){
-					//if(current->constituent_dfa_state[j]==1)
-						//cout<<j<<" ";
-				}
-				//cout<<endl;
+				/*for(int j=0;j<states_num;j++){
+					if(current->constituent_dfa_state[j]==1)
+						cout<<j<<" ";
+				}*/
+				cout<<endl;
 				/*if(merge==1)
 					i=0;	*/
 			}
@@ -264,15 +264,12 @@ void Min_DFA(){
 		cout<<endl;
 	}
 	ofstream output;
-	cout<<"Displaying the output and transition table for the minimal DFA as follows:\n\n";
 	output.open("Min_DFA.txt");
 	output<<"No of states are:"<<" ";
-	cout<<"No of states in the minimal DFA are "<<dfa_minimised_state.size()<<"\n";
 	stringstream o;
 	o<<dfa_minimised_state.size();
 	output<<o.str()<<endl;
 	output<<"No of alphabets: 2"<<endl;
-	cout<<"The alphabets are a,b\n";
 
 	for(int i=0;i<dfa_minimised_state.size();i++){
 					node* t = dfa_minimised_state[i].first;
@@ -284,15 +281,12 @@ void Min_DFA(){
 					if(final_init[k]==1){
 							stringstream h;
 							h<<k;
-							cout<<"The final State is "<<h.str()<<endl;
 							output<<"Final State is:"<<h.str()<<endl;
 					}
 	}
-
-	cout<<"The transition table for the minimal DFA is as follows:\n\n";
 	for(int i=0;i<dfa_minimised_state.size();i++){
 
-					for(int j=1;j<=num_alpha_dfa;j++){
+					for(int j=1;j<num_alpha_dfa;j++){
 								//bitset<MAX_NFA_STATES> s;
 								//move_states(DFAstates[i]->nfa_states,j,s);
 								//epsilon_all_state(s,s);
@@ -302,7 +296,7 @@ void Min_DFA(){
 										if(n->constituent_dfa_state[k]==1)
 											break;
 								}
-								//cout<<"k is"<<k<<endl;
+								cout<<"k is"<<k<<endl;
 								//if(dfa_node[trans_table_dfa[k][j]]!=NULL){
 										int search = trans_table_dfa[k][j];
 								//cout<<endl<<trans_table_dfa[k][j]<<endl;
@@ -314,12 +308,6 @@ void Min_DFA(){
 													stringstream a,b,c;
 													a<<k; b<<j; c<<search;
 													output<<"Transition from state "<<a.str()<<" "<<"on "<<b.str()<<" "<<"to "<<c.str()<<endl;
-													if(b.str() == "1")
-														cout<<"Transition from state "<<a.str()<<" "<<"on a "<<"to "<<c.str()<<endl;
-													else if(b.str() == "2")
-														cout<<"Transition from state "<<a.str()<<" "<<"on b "<<"to "<<c.str()<<endl;
-													else if (b.str() == "3")
-														cout<<"Transition from state "<<a.str()<<" "<<"on eps "<<"to "<<c.str()<<endl;
 													break;
 												}
 										}

@@ -1,17 +1,27 @@
 #include "common_headers.h"
 #include "nfa_construction.h"
 
-
+/*NFA::NFA()
+{
+   // cout<<"1";
+    size = 0;
+    start = 0;
+    last = 0;
+    //cout<<"3";
+}*/
 void NFA::insert_nfa(int _size,state _start,state _last)
 {
 	//make a two-d transition_table of the given size and initialise that with -1
 	//also set the start and the last state
-	size = _size;
+
 	if(isCorrect_state(_start) && isCorrect_state(_last) )
 	{
 		this->start = _start;
 		this->last = _last;
-		
+		this->size = _size;
+		//cout<<"1";
+		//std::vector<std::vector<char> > transition_table(_size,std::vector<char>(_size,';'));
+        //cout<<_last<<" frustrated"<<last<<"weqq\n";
         vector<char> temp(size,';');
         for(int i=0;i<size;i++)
             transition_table.push_back(temp);
@@ -20,24 +30,43 @@ void NFA::insert_nfa(int _size,state _start,state _last)
 	}
 	else{
 		cout<<"Error Initialising the NFA\n Cannot complete the process due to memory allocation\n";
-		//cout<<_start<<" "<<_last<<"\n"<<_size<<"\n";
+		cout<<_start<<" "<<_last<<"\n"<<_size<<"\n";
 		exit(1);
 	}
 }
-
+/*NFA::NFA(const NFA& other)
+{
+	start = other.start;
+	last = other.last;
+	transition_table = other.transition_table;
+	size = other.size;
+	alphabets = other.alphabets;
+}*/
 
 void NFA::setfinal(int a)
 {
     this->last = a;
     return;
 }
+/*NFA NFA::operator=(const NFA& other)
+{
+	//if(this == &other)
+		//return *this;
 
+	start = other.start;
+	last = other.start;
+	transition_table = other.transition_table;
+	size = other.size;
+	alphabets = other.alphabets;
+
+	return *this;
+}*/
 
 bool NFA::isCorrect_state(int _present)
 {
 	if(_present < 0 || _present >= size)
 	{
-		//cout<<_present<<" "<<size<<"\n";
+		cout<<_present<<" "<<size<<"\n";
 		return false;
 	}	
 	return true;
@@ -110,14 +139,10 @@ void NFA :: print()
 	{
 		for(int j=0;j<size;j++)
 		{
-            if(transition_table[i][j]!= ';'){
-                cout<<"Transition from state "<<i<<"to state "<<j<<" is "<<transition_table[i][j];
-            	if(transition_table[i][j] == ' ')
-            	cout<<"e";
-            	cout<<"\n";
-            }
+            if(transition_table[i][j]!= ';')
+                cout<<"Transition from state "<<i<<"to state "<<j<<"is "<<transition_table[i][j]<<" \n";
 		}
-		//cout<<"\n";
+		cout<<"\n";
 	}
 	return;
 }
@@ -151,30 +176,43 @@ void NFA::copy_NFA(const NFA& other)
 	return;
 }
 
+/*set<state> NFA::transition(set<state> states,char _transition)
+{
+	set<state> move;
+
+	set<state>::iterator it;
+	vector<char>::iterator i;
+	for(it=states.begin();it!=states.end();it++)
+	{
+		for(i=transition_table[*it].begin();i!=transition_table[*it].end();i++)
+		{
+			if(transition_table[*it][*i]==_transition)
+				move.insert(*i);
+		}
+	}
+	return move;
+}*/
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //last of NFA class
 
 
-//building an NFA..just create an NFA with two state and use th einsert function of NFA class
+//building an NFA
 
 //NFA first,union_nfa,concatenate_nfa,temp,second;
 
 NFA build_nfa(char alphabet)
 {
     NFA	mata;
-	//cout<<"hi\n";
+	cout<<"hi\n";
     mata.insert_nfa(2,0,1);
-	//cout<<"hello\n";
+	cout<<"hello\n";
     first = mata;
 	first.new_transition(0,1,alphabet);
 	return first;
 }
 
-//unions two NFA by first shifting the states by 1 and adding the first NFA to the second NFA accordingly
-//A new final State is added and then the current NFA size are changed accordingly
-//epsilon has been represented by a space character
 NFA nfa_union(NFA first,NFA second)
 {
 	int nfa_size = first.size+second.size;
@@ -188,7 +226,7 @@ NFA nfa_union(NFA first,NFA second)
 	union_nfa.new_transition(0,second.start,' ');
 	union_nfa.addNewState();
     union_nfa.start = 0;
-	union_nfa.new_transition(second.last,union_nfa.size-1,' '); //adding transition with the final new state
+	union_nfa.new_transition(second.last,union_nfa.size-1,' ');
 	union_nfa.new_transition(first.last,union_nfa.size-1, ' ');
 	//cout<<union_nfa.size<<"\n";
 	union_nfa.setfinal(union_nfa.size-1);
@@ -196,8 +234,6 @@ NFA nfa_union(NFA first,NFA second)
 	return union_nfa;
 }
 
-//using the thompson construction construct the concatenation by first adding a state with that of the existing and then 
-//appending the first state with that of second
 NFA nfa_concatenate(NFA first,NFA second)
 {
 	//concatenate first and second
@@ -211,7 +247,6 @@ NFA nfa_concatenate(NFA first,NFA second)
 	return concatenate_nfa;
 }
 
-//the thompson model of closure has been used 
 NFA nfa_closure(NFA close)
 {
     NFA mata = close;
@@ -221,17 +256,16 @@ NFA nfa_closure(NFA close)
 	//NFA closure_nfa(first);
 	//closure_nfa.start = first.start;
 	//cout<<first.start<<" gjg"<<first.last<<"\n";
-	first.new_transition(first.last,first.start,' '); //adding of new eps transition
-	first.new_transition(first.last,first.size-1,' ');//same as above
-	first.new_transition(0,first.start,' ');//same
-	first.new_transition(0,first.size-1,' ');//same
+	first.new_transition(first.last,first.start,' ');
+	first.new_transition(first.last,first.size-1,' ');
+	first.new_transition(0,first.start,' ');
+	first.new_transition(0,first.size-1,' ');
 	first.start = 0;
 	first.last = first.size-1;
 	//cout<<first.last<<"\n";
 	return first;
 }
 
-//concatenation and closure..:D
 NFA nfa_plus(NFA first)
 {
 	//concatenation of first and closure(first)
@@ -243,9 +277,7 @@ NFA nfa_plus(NFA first)
 }
 //last of the NFA building block functions
 //function for postfix to nfa...
-//use the simple postfix method of calculating the values of numerical logic is applied
-//precedencde no issue
-//for closure only one pop else two pop and a push
+
 NFA postfix_to_nfa(string postfix)
 {
 	stack<NFA> automata;
@@ -256,7 +288,7 @@ NFA postfix_to_nfa(string postfix)
 	char c;
 	for(int i=0;i<postfix.length();i++)
 	{
-		if(postfix[i]=='.') //concatenate requires two pop
+		if(postfix[i]=='.')
 		{
 
 			second_ = automata.top();
@@ -266,7 +298,7 @@ NFA postfix_to_nfa(string postfix)
 			to_concatenate_ = nfa_concatenate(first_,second_);
 			automata.push(to_concatenate_);
 		}
-		else if(postfix[i] == '|') //requires two pop
+		else if(postfix[i] == '|')
 		{
 			second_ = automata.top();
 			automata.pop();
@@ -275,12 +307,12 @@ NFA postfix_to_nfa(string postfix)
 			to_insert_ = nfa_union(first_,second_);
 			automata.push(to_insert_);
 		}
-		else if(postfix[i] == '*') //single pop
+		else if(postfix[i] == '*')
 		{
 			first_ = automata.top();
 			automata.pop();
 			to_insert_ = nfa_closure(first_);
-			//cout<<to_insert_.last<<"\n";
+			cout<<to_insert_.last<<"\n";
 			automata.push(to_insert_);
 		}
 		else if(postfix[i] == '+')
@@ -306,7 +338,6 @@ NFA postfix_to_nfa(string postfix)
 
 }
 
-//prints the NFA in the required format to NFA.txt..
 void print_to_file(NFA final_nfa_)
 {
     ofstream out_nfa;

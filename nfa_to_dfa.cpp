@@ -85,12 +85,12 @@ void nfa_to_dfa(){
 	for ( it=NFA_finalStates.begin() ; it != NFA_finalStates.end(); it++ ){
     	if(res[*it]==1){
     		d->final_state=1;
-    		cout<<"\nthis is a final state pushing\n";
+    		//cout<<"\nthis is a final state pushing\n";
     		DFA_finalStates.push_back(0);
     		break;
     	}
     }
-    cout<<"Hey i am pushing"<<endl;
+    //cout<<"Hey i am pushing"<<endl;
 	DFAstates.push_back(d);
 	q.push(d);
 	//cout<<endl;
@@ -102,7 +102,7 @@ void nfa_to_dfa(){
 
 	int count=0;
 	while(!q.empty()){
-		cout<<"i am in while"<<endl;
+		//cout<<"i am in while"<<endl;
 		 d=q.front();
 		q.pop();
 		//res=d->nfa_states;
@@ -138,16 +138,16 @@ void nfa_to_dfa(){
 	    			if(res_nw[*it]==1){
 	    				d1->final_state=1;
 	    				DFA_finalStates.push_back(*it);
-	    				cout<<"\nthis is a final state pushing\n";
+	    				//cout<<"\nthis is a final state pushing\n";
 	    				break;
 	    			}
 	    		}
 	    		//cout<<"Hey i am pushing"<<endl;
 				DFAstates.push_back(d1);
 				q.push(d1);
-				cout<<"pushing"<<endl;
+				//cout<<"pushing"<<endl;
 			}
-				cout<<"Move on alphabet "<<i<<":";
+				//cout<<"Move on alphabet "<<i<<":";
 				for(int off=0;off<num_states_nfa;off++){
 					if(res_nw[off]==1)
 						cout<<off<<" ";
@@ -160,8 +160,8 @@ void nfa_to_dfa(){
 	}
 
 
-		cout<<endl;
-		cout<<endl;
+		//cout<<endl;
+		//cout<<endl;
 		ofstream p;
 		p.open("DFA.txt");
 
@@ -214,7 +214,7 @@ void nfa_to_dfa(){
 		stringstream f;
 		f<<trans;
 		p<<f.str()<<endl;
-
+		cout<<"The transition table for the converted DFA is as follows:\n";
 		for(int i=0;i<DFAstates.size();i++){
 
 					for(int j=1;j<=num_alpha;j++){
@@ -225,7 +225,12 @@ void nfa_to_dfa(){
 										if(DFAstates[k]->nfa_states==s){
 													stringstream m,r,t;
 													DFAstates[i]->transition[j] = k;
-													cout<<"Transition from state "<<i<<" "<<"on "<<j<<" "<<"to "<<k<<endl;
+													if(j==1)
+														cout<<"Transition from state "<<i<<" "<<"on a "<<"to "<<k<<endl;
+													else if(j==2)
+														cout<<"Transition from state "<<i<<" "<<"on b "<<"to "<<k<<endl;
+													else if(j==0)
+														cout<<"Transition from state "<<i<<" "<<"on eps "<<"to "<<k<<endl;
 													m<<i; r<<j; t<<k;
 													p<<m.str()<<" "<<r.str()<<" "<<t.str()<<endl;
 													break;
